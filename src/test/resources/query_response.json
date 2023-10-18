@@ -1,0 +1,61 @@
+{
+  "content": [
+    {
+      "id": "1",
+      "name": "nameUpdated"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "pageSize": 10,
+    "pageNumber": 0,
+    "unpaged": false,
+    "paged": true
+  },
+  "facetResultPages": [],
+  "facetQueryResult": {
+    "content": [],
+    "pageable": "INSTANCE",
+    "last": true,
+    "totalPages": 1,
+    "totalElements": 0,
+    "size": 0,
+    "number": 0,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "first": true,
+    "numberOfElements": 0,
+    "empty": true
+  },
+  "highlighted": [],
+  "maxScore": null,
+  "fieldStatsResults": {},
+  "suggestions": [],
+  "alternatives": [],
+  "facetFields": [],
+  "allFacets": [
+    null
+  ],
+  "facetPivotFields": [],
+  "totalPages": 1,
+  "totalElements": 1,
+  "size": 10,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "first": true,
+  "last": true,
+  "numberOfElements": 1,
+  "empty": false
+}
