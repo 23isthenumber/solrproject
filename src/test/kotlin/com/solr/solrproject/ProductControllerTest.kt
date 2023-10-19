@@ -1,7 +1,12 @@
 package com.solr.solrproject
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.solr.solrproject.exception.not_found.ProductNotFoundException
+import com.solr.solrproject.solr.Product
+import com.solr.solrproject.solr.SolrConfig
 import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -12,6 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.io.File
+import java.util.*
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -68,7 +74,7 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
 
         //when:
         mockMvc.perform(
-            post(BASE_URL)
+            put("$BASE_URL/1")
                 .content(objectMapper.writeValueAsString(product))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -144,5 +150,55 @@ class ProductControllerTest(@Autowired val mockMvc: MockMvc) {
             //then:
             .andExpect(status().isOk)
             .andExpect(content().json(query_response))
+    }
+
+    @Test
+    @Order(8)
+    fun updateThrowException() {
+        //given:
+        val product = Product().apply {
+            id = "2"
+            name = "secondUpdate"
+        }
+
+        //when:
+        mockMvc.perform(
+            put("$BASE_URL/2")
+                .content(objectMapper.writeValueAsString(product))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+            //then:
+            .andExpect(status().isNotFound)
+            .andExpect { result -> assertTrue(result.resolvedException is ProductNotFoundException) }
+            .andExpect { result ->
+                assertEquals(
+                    "Product with id: 2 does not exist",
+                    Objects.requireNonNull(result.resolvedException?.message)
+                )
+            }
+    }
+
+    @Test
+    @Order(9)
+    fun findByIdThrowException() {
+        //given:
+        val id = "2"
+
+        //when:
+        mockMvc.perform(
+            get("$BASE_URL/id/$id")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+            //then:
+            .andExpect(status().isNotFound)
+            .andExpect { result -> assertTrue(result.resolvedException is ProductNotFoundException) }
+            .andExpect { result ->
+                assertEquals(
+                    "Product with id: 2 does not exist",
+                    Objects.requireNonNull(result.resolvedException?.message)
+                )
+            }
     }
 }

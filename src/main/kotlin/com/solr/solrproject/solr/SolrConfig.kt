@@ -1,5 +1,6 @@
-package com.solr.solrproject
+package com.solr.solrproject.solr
 
+import com.solr.solrproject.ProductService
 import org.apache.solr.client.solrj.SolrClient
 import org.apache.solr.client.solrj.impl.HttpSolrClient
 import org.springframework.context.annotation.Bean

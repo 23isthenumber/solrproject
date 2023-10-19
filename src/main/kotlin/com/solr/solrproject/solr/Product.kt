@@ -1,4 +1,4 @@
-package com.solr.solrproject
+package com.solr.solrproject.solr
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.solr.core.mapping.Indexed
